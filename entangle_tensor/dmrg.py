@@ -183,7 +183,7 @@ class DMRGSolver:
         if dim <= 8:
             # For tiny Hilbert spaces, construct explicit matrix for exact diagonalisation
             eye = np.eye(dim, dtype=np.complex128)
-            h_mat = np.zeros((dim, dim), dtype=np.complex128)
+            h_mat: np.ndarray = np.zeros((dim, dim), dtype=np.complex128)
             for col in range(dim):
                 h_mat[:, col] = lin_op.matvec(eye[:, col])
             # Hermitize to eliminate tiny numerical asymmetry
@@ -210,11 +210,11 @@ class DMRGSolver:
         except Exception:
             # Fallback if ARPACK fails to converge on initial seed: full eigh or power iteration
             eye = np.eye(dim, dtype=np.complex128)
-            h_mat = np.zeros((dim, dim), dtype=np.complex128)
+            h_mat_fb: np.ndarray = np.zeros((dim, dim), dtype=np.complex128)
             for col in range(dim):
-                h_mat[:, col] = lin_op.matvec(eye[:, col])
-            h_mat = 0.5 * (h_mat + h_mat.conj().T)
-            vals, vecs = np.linalg.eigh(h_mat)
+                h_mat_fb[:, col] = lin_op.matvec(eye[:, col])
+            h_mat_fb = 0.5 * (h_mat_fb + h_mat_fb.conj().T)
+            vals, vecs = np.linalg.eigh(h_mat_fb)
             min_idx = int(np.argmin(vals))
             energy = float(vals[min_idx])
             theta_opt = vecs[:, min_idx].reshape(shape)

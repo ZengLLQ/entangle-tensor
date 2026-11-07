@@ -64,7 +64,7 @@ def two_site_correlation_function(
 
     # site_i < site_j
     # Contract left-to-right
-    e = np.ones((1, 1), dtype=np.complex128)
+    e: np.ndarray = np.ones((1, 1), dtype=np.complex128)
 
     for k in range(mps.L):
         a_bra = mps.tensors[k].conj()  # (Dl, d, Dr)
@@ -113,7 +113,7 @@ def string_order_parameter(
     if site_i >= site_j:
         raise ValueError("site_i must be strictly less than site_j for string order.")
 
-    e = np.ones((1, 1), dtype=np.complex128)
+    e: np.ndarray = np.ones((1, 1), dtype=np.complex128)
 
     for k in range(mps.L):
         a_bra = mps.tensors[k].conj()

@@ -209,7 +209,7 @@ class MatrixProductState:
             raise ValueError("MPS dimension mismatch for inner product.")
 
         # Transfer tensor environment E of shape (D_self_l, D_other_l) initialized to [[1.0]]
-        e = np.ones((1, 1), dtype=np.complex128)
+        e: np.ndarray = np.ones((1, 1), dtype=np.complex128)
         for i in range(self.L):
             a_bra = self.tensors[i].conj()  # (Dl_bra, d, Dr_bra)
             a_ket = other.tensors[i]  # (Dl_ket, d, Dr_ket)
@@ -294,7 +294,8 @@ class MatrixProductState:
         s_norm = np.linalg.norm(s)
         if s_norm > 1e-15:
             s = s / s_norm
-        return s
+        res: np.ndarray = np.asarray(s)
+        return res
 
     def to_dense_statevector(self) -> np.ndarray:
         """

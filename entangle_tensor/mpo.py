@@ -193,7 +193,7 @@ class MatrixProductOperator:
             raise ValueError("MPO and MPS dimensions must match for expectation value.")
 
         # Environment tensor E with legs (D_bra, w, D_ket) initialized to (1, 1, 1)
-        e = np.ones((1, 1, 1), dtype=np.complex128)
+        e: np.ndarray = np.ones((1, 1, 1), dtype=np.complex128)
 
         for i in range(self.L):
             a_bra = mps.tensors[i].conj()  # (D_bra_l, d, D_bra_r)
